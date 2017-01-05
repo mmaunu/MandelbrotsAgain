@@ -23,12 +23,12 @@ public class FractalViewer extends JFrame implements MouseListener, MouseMotionL
 		super("Fractal Viewer 0.723");
 		title = "Fractal Viewer 0.723";
 		
-		drawingPanel = new FractalDrawingPanel(850, 600);
+		drawingPanel = new FractalDrawingPanel(1700, 1200);
 		
 		drawingPanel.addMouseMotionListener(this);
 		drawingPanel.addMouseListener(this);
 		
-		setSize(1000,700);
+		setSize(1800,1300);
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(drawingPanel, BorderLayout.CENTER);
 		setVisible(true);

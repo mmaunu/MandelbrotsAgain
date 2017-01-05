@@ -3,15 +3,18 @@ import java.awt.image.BufferedImage;
 import java.util.HashSet;
 
 
-public class Mandelbrot extends FractalMandelbrotOrJulia
+public class Julia extends FractalMandelbrotOrJulia
 {
 	private int width, height;	//pixels
 	private double centerA, centerB, scaleWidth, scaleHeight;	//in complex plane
+	
+	private double juliaA, juliaB;
+	
 //	private double[] reals, imags;			
 	
 	private BufferedImage img;
 	
-	private int maxIterations = 1000;
+	private int maxIterations = 200;
 	
 	private FractalColorChooser colorChooser;
 	
@@ -19,7 +22,7 @@ public class Mandelbrot extends FractalMandelbrotOrJulia
 	
 	//private int numberOfColors;
 	
-	public Mandelbrot(int w, int h, double ca, double cb, double sw, double sh)
+	public Julia(int w, int h, double ca, double cb, double sw, double sh, double ja, double jb)
 	{
 		width = w;
 		height = h;
@@ -27,6 +30,8 @@ public class Mandelbrot extends FractalMandelbrotOrJulia
 		centerB = cb;
 		scaleWidth = sw;
 		scaleHeight = sh;
+		juliaA = ja;
+		juliaB = jb;
 		iterations = new int[height][width];
 	//	numberOfColors = 0;
 		img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -64,8 +69,8 @@ public class Mandelbrot extends FractalMandelbrotOrJulia
 					if(Math.sqrt(zCurrA*zCurrA + zCurrB*zCurrB) >= 2)
 						break;
 					zTemp = zCurrA;
-					zCurrA = zCurrA*zCurrA - zCurrB*zCurrB + currA;	//current squared plus orig point
-					zCurrB = 2*zTemp*zCurrB + currB;
+					zCurrA = zCurrA*zCurrA - zCurrB*zCurrB + juliaA;	//current squared plus orig point
+					zCurrB = 2*zTemp*zCurrB + juliaB;
 				}
 				
 				//turn test value into color and store iteration number

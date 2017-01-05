@@ -18,7 +18,7 @@ public class FractalDrawingPanel extends JPanel implements ActionListener
 	private static final long serialVersionUID = -6984773470073180198L;
 	private int width, height;
 	
-	private Mandelbrot mandy;
+	private FractalMandelbrotOrJulia mandy;
 	
 	private boolean animatingColors = false;
 	
@@ -28,7 +28,7 @@ public class FractalDrawingPanel extends JPanel implements ActionListener
 		super();
 		width = w;
 		height = h;
-		mandy = new Mandelbrot(width, height, -0.5, 0, (double)width/height*2, 2);
+		mandy = new Julia(width, height, -0.5, 0, (double)width/height*2, 2, 0, 1);
 		mandy.calculateIterationScores();
 		mandy.draw();
 		setBackground(Color.red);
@@ -71,27 +71,28 @@ public class FractalDrawingPanel extends JPanel implements ActionListener
 	
 	public void animateColors() {
 		System.out.println("trying to animate");
-		animatingColors = true;
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				while(animatingColors) {
-					System.out.println("in the thread's run method...and loop");
-					mandy.getColorChooser().modifyColorRamp();
-					mandy.draw();
-					repaint();
-					
-					try {
-						Thread.sleep(3);
-					}
-					catch(InterruptedException e) {
-						System.out.println("Really...you couldn't let me sleep?");
+		if(!animatingColors) {
+			animatingColors = true;
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					while(animatingColors) {
+						mandy.getColorChooser().modifyColorRamp();
+						mandy.draw();
+						repaint();
+						
+						try {
+							Thread.sleep(3);
+						}
+						catch(InterruptedException e) {
+							System.out.println("Really...you couldn't let me sleep?");
+						}
 					}
 				}
-			}
-		}).start();
+			}).start();
+		}
 	}
 
 	public void stopColorAnimation() {
